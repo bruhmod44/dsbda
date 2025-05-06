@@ -1,0 +1,201 @@
+In [1]: pip install PyPDF2
+In [2]:pip install python-docx
+
+In [4]:
+import PyPDF2 
+pdfFileObj = open(r"D:\College\TE\SEM-2\Practical\DSBDA\7\sample1.pdf", 'rb') 
+pdfReader = PyPDF2.PdfFileReader(pdfFileObj)  
+print(pdfReader.numPages) 
+pageObj = pdfReader.getPage(0) 
+print(pageObj.extractText()) 
+pdfFileObj.close()
+
+In [9]:
+
+ import docx
+ doc = docx.Document()
+ doc.add_heading('Heading for the document', 0)
+ doc_para = doc.add_paragraph('Your paragraph goes here, ')
+ doc_para.add_run('hey there, bold here').bold = True
+ doc_para.add_run(', and ')
+ doc_para.add_run('these words are italic').italic = True
+ doc.add_page_break()
+ doc.add_heading('Heading level 2', 2)
+ doc.add_picture(r"D:\College\TE\SEM-2\Practical\DSBDA\7\index.jpg")
+ doc.save('new_doc')
+
+In [10]: pip install nltk
+In [11]:
+import nltk
+nltk.download()
+nltk.download('punkt')
+
+In [12]:
+	sentence_data = "The First sentence is about Python. The Second: about Django. You can learn Python,Django and Data Ananlysis here. \"\n",
+    	nltk_tokens = nltk.sent_tokenize(sentence_data)
+    	print (nltk_tokens)
+
+In [13]:
+	german_tokenizer = nltk.data.load('tokenizers/punkt/german.pickle')\n",
+        german_tokens=german_tokenizer.tokenize('Wie geht es Ihnen?  Gut, danke.')
+        print(german_tokens)
+
+In [14]:
+	word_data = "It originated from the idea that there are readers who prefer learning new skills from the comforts of their drawing rooms\"\n",
+    	nltk_tokens = nltk.word_tokenize(word_data)
+    	print (nltk_tokens)
+
+In [15]:
+
+ from nltk.corpus import stopwords
+ from nltk.tokenize import word_tokenize, sent_tokenize
+ txt = "He is a boy. "\
+ "She is a girl"
+ word_tokens = word_tokenize(txt)
+ print(word_tokens)
+
+In [16]:
+    import nltk
+    nltk.download('averaged_perceptron_tagger')
+    from nltk.tokenize import word_tokenize
+    text = word_tokenize("Hello welcome to the world of to learn Categorizing and POS Tagging with NLTK and Python")
+    nltk.pos_tag(text)
+
+ In [17]:import nltk
+ 	nltk.download('stopwords')
+ 	nltk.download('averaged_perceptron_tagger')
+
+In [18]:
+ from nltk.corpus import stopwords
+ print(stopwords.words('english'))
+
+In [19]:
+ 
+ from nltk.corpus import stopwords
+ from nltk.tokenize import word_tokenize
+ example_sent = """This is a sample sentence,
+                  showing off the stop words filtration."""
+ stop_words = set(stopwords.words('english'))
+ word_tokens = word_tokenize(example_sent)
+ filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words]
+ filtered_sentence = []
+ for w in word_tokens:
+ if w not in stop_words:
+ filtered_sentence.append(w)
+ print("Tokenized:", word_tokens)
+ print("Stop Words Removed:", filtered_sentence)
+
+In [21]:
+ 
+ import io
+ from nltk.corpus import stopwords
+ from nltk.tokenize import word_tokenize
+ stop_words = set(stopwords.words('english'))
+ file1 = open(r"D:\College\TE\SEM-2\Practical\DSBDA\7\text.txt")
+ line = file1.read()
+ words = line.split()
+ for r in words:
+ if not r in stop_words:
+ appendFile = open('filteredtext.txt','a')
+ appendFile.write(" "+r)
+ appendFile.close()
+
+In [22]:
+ 
+ import nltk
+ from nltk.stem.porter import PorterStemmer
+ porter_stemmer = PorterStemmer()
+
+word_data = "It vijaying meeting better vijayed vijays eats skills originated from the idea that there are readers who prefer learning new skills from the comforts of their drawing rooms"
+ nltk_tokens = nltk.word_tokenize(word_data)
+ for w in nltk_tokens:
+ print("Actual: %s  Stem: %s"  % (w,porter_stemmer.stem(w)))
+
+In [23]:
+ 
+ import nltk
+ nltk.download('wordnet')
+ from nltk.stem import WordNetLemmatizer
+ wordnet_lemmatizer = WordNetLemmatizer()
+
+word_data = "It studies densely is better  meeting studying vijaying vijayed vijays skills originated from the idea that there are readers who prefer learning new skills from the comforts of their drawing rooms"
+ nltk_tokens = nltk.word_tokenize(word_data)
+ for w in nltk_tokens:
+ print("Actual: %s  Lemma: %s"  % (w,wordnet_lemmatizer.lemmatize(w))) 
+
+In [24]:
+ #Expt.No.7 2nd Operation
+ import pandas as pd
+ import sklearn as sk
+ import math 
+
+In [25]:
+ first_sentence = "Data Science is the best job of the 21st century"
+ second_sentence = "Machine learning is the key for data science"
+ #split so each word have their own string
+ first_sentence = first_sentence.split(" ")
+ second_sentence = second_sentence.split(" ")#join them to remove common duplicate words
+ total= set(first_sentence).union(set(second_sentence))
+ print(total)
+
+In [26]:
+ wordDictA = dict.fromkeys(total, 0) 
+wordDictB = dict.fromkeys(total, 0)
+ for word in first_sentence:
+ wordDictA[word]+=1
+ for word in second_sentence:
+ wordDictB[word]+=1
+ pd.DataFrame([wordDictA, wordDictB])
+
+ In [27]:
+def computeTF(wordDict, doc):
+ tfDict = {}
+ corpusCount = len(doc)
+ for word, count in wordDict.items():
+ tfDict[word] = count/float(corpusCount)
+ return(tfDict)
+
+ tfFirst = computeTF(wordDictA, first_sentence)
+ tfSecond = computeTF(wordDictB, second_sentence)
+
+ pd.DataFrame([tfFirst, tfSecond])
+
+In [28]:
+
+ def computeIDF(docList):
+ idfDict = {}
+ N = len(docList)
+ idfDict = dict.fromkeys(docList[0].keys(), 0)
+ for word, val in idfDict.items():
+ idfDict[word] = math.log10(N / (float(val) + 1))
+ return(idfDict)
+ 
+ idfs = computeIDF([wordDictA, wordDictB])
+
+
+ In [29]:
+
+ def computeTFIDF(tfBow, idfs):
+ tfidf = {}
+ for word, val in tfBow.items():
+ 	tfidf[word] = val*idfs[word]
+ return(tfidf)
+ 
+ idfFirst = computeTFIDF(tfFirst, idfs)
+ idfSecond = computeTFIDF(tfSecond, idfs)
+
+ pd.DataFrame([idfFirst, idfSecond])
+
+In [30]:
+
+ from sklearn.feature_extraction.text import TfidfVectorizer
+
+ firstV= "Data Science is the sexiest job of the 21st century"
+ secondV= "machine learning is the key for data science"
+ 
+ vectorize= TfidfVectorizer()
+ 
+ response= vectorize.fit_transform([firstV, secondV])
+ print(response)
+
+
