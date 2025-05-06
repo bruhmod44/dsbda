@@ -1,0 +1,20 @@
+In [1]:
+import pandas as pd
+import seaborn as sns
+
+In [2]:data=pd.read_csv(r"D:\College\TE\SEM-2\Practical\DSBDA\10\Iris.csv")
+
+In [3]:data.head()
+In [4]:data.describe()
+In [5]:data.info()
+In [6]:sns.histplot(data=data, x="SepalLengthCm")
+In [7]:sns.histplot(data=data, x="PetalLengthCm")
+In [8]:sns.histplot(data=data, x="SepalWidthCm")
+In [9]:sns.histplot(data=data, x="PetalWidthCm")
+In [10]:sns.boxplot(x="SepalLengthCm", data=data)
+In [11]:sns.boxplot(x="PetalLengthCm", data=data)
+In [12]:sns.boxplot(x="SepalWidthCm", data=data)
+In [13]: sns.boxplot(x="PetalWidthCm", data=data)
+In [14]: sns.boxplot(x="PetalWidthCm", y="PetalLengthCm", data=data)
+In [15]: sns.boxplot(x="SepalWidthCm", y="SepalLengthCm", data=data)
+ 
