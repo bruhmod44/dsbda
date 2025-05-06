@@ -1,0 +1,59 @@
+In [1]:pip install seaborn
+
+In [2]:
+import pandas as pd
+import numpy as np
+ 
+import matplotlib.pyplot as plt
+import seaborn as sns
+ 
+dataset = sns.load_dataset('titanic')
+ 
+dataset.head()
+
+In [3]:
+sns.distplot(dataset['fare'])
+
+In [4]:
+sns.distplot(dataset['fare'], kde=False)
+
+
+In [5]:
+sns.jointplot(x='age', y='fare', data=dataset)
+
+In [6]:
+sns.rugplot(dataset['fare'])
+
+In [7]:
+sns.barplot(x='sex', y='age', data=dataset)
+
+In [8]:
+sns.countplot(x='sex', data=dataset)
+
+In [9]:
+sns.boxplot(x='sex', y='age', data=dataset)
+
+ In [10]:
+ sns.boxplot(x='sex', y='age', data=dataset, hue="survived")
+
+ In [11]:
+ sns.violinplot(x='sex', y='age', data=dataset)
+
+In [12]:
+ sns.stripplot(x='sex', y='age', data=dataset)
+
+ In [13]:
+ sns.swarmplot(x='sex', y='age', data=dataset)
+
+In [14]:
+ sns.violinplot(x='sex', y='age', data=dataset)
+ sns.swarmplot(x='sex', y='age', data=dataset, color='black')
+
+ In [15]:
+ titanic_hist = dataset.fare.plot.hist(bins = 40, color = 'grey')
+ plt.xlabel('Fare (pounds, 1912 prices)')
+
+ plt.show(titanic_hist)
+
+In [16]:
+ sns.distplot(dataset['fare'])
