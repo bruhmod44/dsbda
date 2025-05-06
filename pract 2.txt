@@ -1,0 +1,23 @@
+In [1]: pip install pandas
+In [2]:  import pandas as pd
+In [4]:df = pd.read_csv(r"D:\College\TE\SEM-2\Practical\DSBDA\1\StudentsPerformance.csv")
+In [5]: print(df)
+In [7]: df.head(15)
+In [8]: df.isnull().sum()
+In [9]: print(df.describe())
+In [11]:df.dtypes
+In [12]: df.dropna(axis=1)
+In [13]: y = df.iloc[:, 0:1]
+ 	 print(y)
+In [18]: from sklearn.preprocessing import LabelEncoder
+ 	 le = LabelEncoder()
+ 	 y = le.fit_transform(y)
+ 	 print(y)
+In [19]: print(df['race/ethnicity'].value_counts())
+In [20]:df_Lunch = pd.get_dummies(df['lunch'])
+ 	df_new = pd.concat([df, df_Lunch], axis=1)
+ 	print(df_new)
+
+
+
+
