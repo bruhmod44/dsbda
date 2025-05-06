@@ -1,0 +1,22 @@
+In [2]:
+ import pandas as pd
+ import numpy as np
+ from sklearn import linear_model
+ from sklearn.model_selection import train_test_split
+
+In [3]:from sklearn.datasets import load_boston
+ 	boston = load_boston()
+ 	print(boston)
+
+In [4]: boston.feature_names
+In [5]: boston.target
+In [6]:x = pd.DataFrame(boston.data, columns = boston.feature_names)
+       y = pd.DataFrame(boston.target)
+In [7]:x.head(10)
+In [8]: y.head(10)
+In [9]:reg = linear_model.LinearRegression()
+In [10]:x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=42)
+In [11]:reg.fit(x_train, y_train)
+In [12]: print(reg.coef_)
+In [13]: y_pred = reg.predict(x_test)
+ 	print(y_pred)
